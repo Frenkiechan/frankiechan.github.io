@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 的奇幻旅程：從科幻到生活</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #fdfbf6;
+            color: #3f3f46;
+        }
+        .timeline-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-button.active + .accordion-content {
+            max-height: 500px;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="main-header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-stone-800">AI 的奇幻旅程</h1>
+            <div class="hidden md:flex space-x-6">
+                <a href="#intro" class="text-stone-600 hover:text-teal-600 transition">開端</a>
+                <a href="#timeline" class="text-stone-600 hover:text-teal-600 transition">發展歷程</a>
+                <a href="#era-golden" class="text-stone-600 hover:text-teal-600 transition">黃金時代</a>
+                <a href="#era-llm" class="text-stone-600 hover:text-teal-600 transition">新浪潮</a>
+                <a href="#concepts" class="text-stone-600 hover:text-teal-600 transition">關鍵概念</a>
+                <a href="#future" class="text-stone-600 hover:text-teal-600 transition">未來展望</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-stone-600 hover:bg-stone-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col space-y-2">
+            <a href="#intro" class="text-stone-600 hover:text-teal-600 transition block py-1">開端</a>
+            <a href="#timeline" class="text-stone-600 hover:text-teal-600 transition block py-1">發展歷程</a>
+            <a href="#era-golden" class="text-stone-600 hover:text-teal-600 transition block py-1">黃金時代</a>
+            <a href="#era-llm" class="text-stone-600 hover:text-teal-600 transition block py-1">新浪潮</a>
+            <a href="#concepts" class="text-stone-600 hover:text-teal-600 transition block py-1">關鍵概念</a>
+            <a href="#future" class="text-stone-600 hover:text-teal-600 transition block py-1">未來展望</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="intro" class="container mx-auto px-6 py-20 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-stone-800 mb-4">AI，到底是什麼？</h2>
+            <p class="text-lg text-stone-600 max-w-3xl mx-auto">
+                簡單來說，人工智慧 (AI) 就是讓機器「像人一樣思考和學習」的科學與技術。從手機上的語音助手、購物網站的個人化推薦，到醫療影像的分析，AI 已經無處不在，並深刻地改變著我們的生活。讓我們一同踏上這段奇幻旅程，探索 AI 從科幻到現實的演進。
+            </p>
+        </section>
+
+        <section id="timeline" class="container mx-auto px-6 py-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-stone-800 mb-16">發展歷程</h2>
+            <div class="relative wrap overflow-hidden p-10 h-full">
+                <div class="border-2-2 absolute border-opacity-20 border-teal-700 h-full border" style="left: 50%"></div>
+                
+                <div id="era-birth" class="timeline-item mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-teal-600 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-stone-800 text-xl">萌芽期 (1950s - 1980s)</h3>
+                        <p class="text-sm leading-snug tracking-wide text-stone-600">
+                            1956 年，在達特茅斯會議上，「人工智慧」一詞誕生，開啟了讓機器像人一樣推理和解決問題的夢想。圖靈測試等概念在此時期提出，但技術侷限讓早期 AI 發展緩慢。
+                        </p>
+                    </div>
+                </div>
+
+                <div id="era-winter" class="timeline-item mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-teal-600 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto text-white font-semibold text-lg">2</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-stone-800 text-xl">起伏期 (1980s - 2000s)</h3>
+                        <p class="text-sm leading-snug tracking-wide text-stone-600">
+                            專家系統帶來短暫榮光，但過高的期望導致了「AI 的冬天」。研究者開始轉向，意識到讓機器從大量數據中「學習」可能更有效，為機器學習的崛起埋下伏筆。
+                        </p>
+                    </div>
+                </div>
+
+                <div id="era-golden" class="timeline-item mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-teal-600 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-stone-800 text-xl">黃金時代 (2010s 至今)</h3>
+                        <p class="text-sm leading-snug tracking-wide text-stone-600">
+                            大數據、強大算力 (GPU) 和深度學習演算法的突破，共同引爆了 AI 革命。模仿人腦神經網絡的深度學習，讓圖像和語音識別等領域取得了巨大成功。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="container mx-auto px-6 py-16">
+                    <div class="chart-container">
+                        <canvas id="aiGrowthChart"></canvas>
+                    </div>
+                     <p class="text-center text-sm text-stone-500 mt-4">指標性 AI 模型參數數量增長示意圖</p>
+                </div>
+
+
+                <div id="era-llm" class="timeline-item mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-teal-600 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto text-white font-semibold text-lg">4</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                        <h3 class="mb-3 font-bold text-stone-800 text-xl">新浪潮 (現今)</h3>
+                        <p class="text-sm leading-snug tracking-wide text-stone-600">
+                            生成式 AI 登場，讓 AI 不僅能分析，更能「創造」文字、圖片和程式碼。以 ChatGPT 為首的大型語言模型 (LLM) 讓 AI 真正走入大眾生活，開啟了全新的互動模式。
+                        </p>
+                         <button data-modal-target="llm-players-modal" class="mt-4 text-sm text-teal-600 hover:text-teal-800 font-semibold">探索主要玩家 →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="concepts" class="bg-white py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-stone-800 mb-12">理解今天的 AI：幾個關鍵詞</h2>
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <div class="accordion-item border border-stone-200 rounded-lg">
+                        <button class="accordion-button w-full text-left p-4 font-semibold text-stone-700 flex justify-between items-center hover:bg-stone-50 transition">
+                            <span>機器學習 vs. 深度學習</span>
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4 text-stone-600">
+                            <p>機器學習是 AI 的一個分支，讓電腦從數據中學習規律。深度學習則是機器學習中更強大的一種方法，它模仿人腦神經網絡，能自動學習更複雜、更抽象的特徵，特別擅長處理圖像和語音等任務。</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-stone-200 rounded-lg">
+                        <button class="accordion-button w-full text-left p-4 font-semibold text-stone-700 flex justify-between items-center hover:bg-stone-50 transition">
+                            <span>大型語言模型 (LLM)</span>
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4 text-stone-600">
+                            <p>LLM 是專門處理和生成文字的 AI 模型。它們像讀遍了整座圖書館的學者，能理解語言的細微差別，並生成流暢、連貫的文字內容，是 ChatGPT 等應用的核心技術。</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item border border-stone-200 rounded-lg">
+                        <button class="accordion-button w-full text-left p-4 font-semibold text-stone-700 flex justify-between items-center hover:bg-stone-50 transition">
+                            <span>AI 倫理與挑戰</span>
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content px-4 pb-4 text-stone-600">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>偏見：</strong>AI 可能會學習並放大訓練數據中存在的社會偏見。</li>
+                                <li><strong>隱私：</strong>如何安全地使用大量數據來訓練 AI 是一個重要課題。</li>
+                                <li><strong>幻覺：</strong>AI 有時會「瞎掰」出聽起來合理但實際上錯誤的資訊。</li>
+                                <li><strong>可解釋性 (XAI)：</strong>我們需要理解 AI 做出某個判斷的具體原因，以確保其公平和可靠。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future" class="container mx-auto px-6 py-20">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-stone-800 mb-12">AI 的未來展望</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+                    <h3 class="text-xl font-bold text-teal-600 mb-2">通用人工智慧 (AGI)</h3>
+                    <p class="text-stone-600">這是 AI 發展的終極目標：創造出能像人類一樣全面思考、理解和學習的智慧系統。</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+                    <h3 class="text-xl font-bold text-teal-600 mb-2">產業深度融合</h3>
+                    <p class="text-stone-600">AI 將更深入地與醫療、教育、交通、藝術等各行各業結合，創造出前所未有的應用和價值。</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+                    <h3 class="text-xl font-bold text-teal-600 mb-2">本地端 AI (On-Device)</h3>
+                    <p class="text-stone-600">AI 將更多地在手機、穿戴裝置等終端設備上運行，這不僅能提高反應速度，更能有效保護使用者隱私。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>共同探索 AI 的未來，保持好奇心，迎接挑戰。</p>
+            <p class="text-sm text-stone-400 mt-2">&copy; 2025 AI 發展歷程概覽</p>
+        </div>
+    </footer>
+
+    <div id="llm-players-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 opacity-0">
+        <div class="modal-content bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6 transform scale-95 opacity-0">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-stone-800">生成式 AI 主要玩家</h3>
+                <button class="modal-close p-2 rounded-full hover:bg-stone-100">&times;</button>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="border rounded-lg p-4">
+                    <h4 class="font-bold text-lg text-teal-700">OpenAI</h4>
+                    <p class="text-stone-600 mt-1">作為產業領頭羊，其 GPT 系列模型 (特別是 ChatGPT) 讓生成式 AI 普及化，展現了強大的通用語言能力。</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h4 class="font-bold text-lg text-teal-700">Google</h4>
+                    <p class="text-stone-600 mt-1">以 Gemini 系列模型應戰，強調原生的多模態能力，能同時理解文字、圖像、音訊等，並深度整合進其龐大的生態系。</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h4 class="font-bold text-lg text-teal-700">Anthropic</h4>
+                    <p class="text-stone-600 mt-1">由前 OpenAI 成員創立，專注於安全、負責任的 AI。其 Claude 系列模型以優秀的長文本處理和推理能力著稱。</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h4 class="font-bold text-lg text-teal-700">xAI</h4>
+                    <p class="text-stone-600 mt-1">由 Elon Musk 創立，其 Grok 模型以獨特的幽默、叛逆個性和即時存取 X 平台資訊的能力為賣點，提供差異化體驗。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    accordionButtons.forEach(otherButton => {
+                        if (otherButton !== button) {
+                            otherButton.classList.remove('active');
+                            otherButton.querySelector('.transform').style.transform = '';
+                        }
+                    });
+                    button.classList.toggle('active');
+                    if (button.classList.contains('active')) {
+                        button.querySelector('.transform').style.transform = 'rotate(180deg)';
+                    } else {
+                        button.querySelector('.transform').style.transform = '';
+                    }
+                });
+            });
+
+            const modalTriggers = document.querySelectorAll('[data-modal-target]');
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalId = trigger.getAttribute('data-modal-target');
+                    const modal = document.getElementById(modalId);
+                    openModal(modal);
+                });
+            });
+
+            function openModal(modal) {
+                if (!modal) return;
+                const modalContent = modal.querySelector('.modal-content');
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('opacity-0', 'scale-95');
+                }, 10);
+
+                const closeButtons = modal.querySelectorAll('.modal-close');
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', () => closeModal(modal));
+                });
+
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+            }
+
+            function closeModal(modal) {
+                if (!modal) return;
+                const modalContent = modal.querySelector('.modal-content');
+                modal.classList.add('opacity-0');
+                modalContent.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+
+            const ctx = document.getElementById('aiGrowthChart').getContext('2d');
+            const aiGrowthChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['AlexNet (2012)', 'VGG-16 (2014)', 'GPT-2 (2019)', 'GPT-3 (2020)', 'PaLM (2022)'],
+                    datasets: [{
+                        label: '模型參數數量 (對數標度)',
+                        data: [60, 138, 1500, 175000, 540000],
+                        backgroundColor: 'rgba(13, 148, 136, 0.6)',
+                        borderColor: 'rgba(13, 148, 136, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'logarithmic',
+                            title: {
+                                display: true,
+                                text: '參數數量 (百萬)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US').format(context.parsed.y) + ' 百萬';
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
